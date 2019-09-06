@@ -132,7 +132,6 @@ sendData () {
   return (
     <div className="App">
       <header className="App-header">
-
        <div>
 
 
@@ -142,7 +141,7 @@ sendData () {
 
   </div>
 
-      <h2>Adminka</h2>
+      <h2>AdminPanel</h2>
       <Button style={{marginTop:-50,marginLeft:50}} positive onClick={this.toggle}>
        <Icon name='plus' />Add To List</Button>
        {addInput}
