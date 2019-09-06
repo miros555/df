@@ -38,6 +38,7 @@ componentDidMount(){
 
 
 sendData () {
+    /*
   var url = 'https://test-task-server.herokuapp.com/api/v1/recipe/create';
   var data = {
     "title": this.state.title,
@@ -47,10 +48,7 @@ sendData () {
     fetch(url, {
       //mode: 'cors',
       body: JSON.stringify(data),
-      /*headers: {
-        'dataType': 'json',
-        'content-type': 'application/json'
-      },*/
+
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -68,9 +66,9 @@ sendData () {
   .catch(error => {
     console.error(error);
   });
+*/
 
 
-  /*
   const listPost = {
     title: this.state.title
   };
@@ -82,8 +80,8 @@ sendData () {
   payload: JSON.stringify(listPost),
   muteHttpExceptions: true,
 };
-  //const proxyurl = "https://cors-anywhere.herokuapp.com/";
-  fetch(qUrl, option).then(data =>{
+  const proxyurl = "https://cors-anywhere.herokuapp.com/";
+  fetch(proxyurl+qUrl, option).then(data =>{
           console.log("Successful" + data);
 
           this.setState({
@@ -92,7 +90,7 @@ sendData () {
             text:''
         });
     })
-*/
+
 
   }
 
