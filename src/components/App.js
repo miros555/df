@@ -45,7 +45,7 @@ sendData () {
     "categoryId":this.state.categoryId
   };
     fetch(url, {
-      mode: 'cors',
+      //mode: 'cors',
       body: JSON.stringify(data),
       /*headers: {
         'dataType': 'json',
@@ -135,7 +135,7 @@ sendData () {
 
 
   {this.state.categoryId}
-      <h2>AdminPanel</h2>
+      <h2>AdminPanel*</h2>
       <Button style={{marginTop:-50,marginLeft:50}} positive onClick={this.toggle}>
        <Icon name='plus' />Add To List</Button>
        {addInput}
