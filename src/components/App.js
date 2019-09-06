@@ -46,7 +46,7 @@ sendData () {
   };
   var qUrl = 'https://test-task-server.herokuapp.com/api/v1/recipe/create';
   var option = {
-    mode: 'same-origin',
+    mode: 'no-cors',
     method: "POST",
     body: JSON.stringify(listPost),
     headers: {
@@ -107,7 +107,7 @@ sendData () {
 
 
   {this.state.categoryId}
-      <h2>AdminPanel</h2>
+      <h2>AdminPanel555</h2>
       <Button style={{marginTop:-50,marginLeft:50}} positive onClick={this.toggle}>
        <Icon name='plus' />Add To List</Button>
        {addInput}
