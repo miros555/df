@@ -38,36 +38,6 @@ componentDidMount(){
 
 
 sendData () {
-    /*
-  var url = 'https://test-task-server.herokuapp.com/api/v1/recipe/create';
-  var data = {
-    "title": this.state.title,
-    "text":this.state.text,
-    "categoryId":this.state.categoryId
-  };
-    fetch(url, {
-      //mode: 'cors',
-      body: JSON.stringify(data),
-
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      method: 'POST',
-      redirect: 'follow'
-    })
-    .then(response => {
-      if (response.status === 200) {
-        console.log(response.text());
-    } else {
-     throw new Error('Something went wrong on api server!');
-    }
-  })
-  .catch(error => {
-    console.error(error);
-  });
-*/
-
 
   const listPost = {
     title: this.state.title,
@@ -76,11 +46,13 @@ sendData () {
   };
   var qUrl = 'https://test-task-server.herokuapp.com/api/v1/recipe/create';
   var option = {
-  method: "post",
-  headers: {"X-API-TOKEN": "###"},
-  contentType: "application/json",
-  payload: JSON.stringify(listPost),
-  muteHttpExceptions: true,
+    mode: 'same-origin',
+    method: "POST",
+    body: JSON.stringify(listPost),
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
 };
   //const proxyurl = "https://cors-anywhere.herokuapp.com/";
   fetch(qUrl, option).then(data =>{
@@ -135,7 +107,7 @@ sendData () {
 
 
   {this.state.categoryId}
-      <h2>AdminPanel*</h2>
+      <h2>AdminPanel</h2>
       <Button style={{marginTop:-50,marginLeft:50}} positive onClick={this.toggle}>
        <Icon name='plus' />Add To List</Button>
        {addInput}
