@@ -45,10 +45,15 @@ sendData () {
     "categoryId":this.state.categoryId
   };
     fetch(url, {
+      mode: 'same-origin',
       body: JSON.stringify(data),
-      headers: {
+      /*headers: {
         'dataType': 'json',
         'content-type': 'application/json'
+      },*/
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
       },
       method: 'POST',
       redirect: 'follow'
@@ -136,12 +141,14 @@ sendData () {
 
 
   </div>
-{this.state.categoryId}
+
       <h2>Adminka</h2>
       <Button style={{marginTop:-50,marginLeft:50}} positive onClick={this.toggle}>
        <Icon name='plus' />Add To List</Button>
        {addInput}
       </header>
+
+      {this.state.categoryId}
     </div>
   );
 
