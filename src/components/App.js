@@ -39,7 +39,11 @@ componentDidMount(){
 
 sendData () {
   var url = 'https://test-task-server.herokuapp.com/api/v1/recipe/create';
-  var data = {title: this.state.title};
+  var data = {
+    "title": this.state.title,
+    "text":this.state.text,
+    "categoryId":this.state.categoryId
+  };
     fetch(url, {
       body: JSON.stringify(data),
       headers: {
