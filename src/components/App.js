@@ -132,7 +132,7 @@ sendData () {
   return (
     <div className="App">
       <header className="App-header">
-       <div>
+
 
   {this.state.categoryId}
       <h2>AdminPanel</h2>
@@ -143,7 +143,7 @@ sendData () {
       {list.map((el,index)=>{ return <li
       key={index}>{el.title}<br/>{el.text}</li>}) }
 
-    </div>
+  
       </div>
   );
 
