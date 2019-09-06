@@ -45,7 +45,7 @@ sendData () {
     "categoryId":this.state.categoryId
   };
     fetch(url, {
-      mode: 'same-origin',
+      mode: 'no-cors',
       body: JSON.stringify(data),
       /*headers: {
         'dataType': 'json',
@@ -134,21 +134,17 @@ sendData () {
       <header className="App-header">
        <div>
 
-
-    {list.map((el,index)=>{ return <li
-    key={index}>{el.title}<br/>{el.text}</li>}) }
-
-
-  </div>
-
+  {this.state.categoryId}
       <h2>AdminPanel</h2>
       <Button style={{marginTop:-50,marginLeft:50}} positive onClick={this.toggle}>
        <Icon name='plus' />Add To List</Button>
        {addInput}
       </header>
+      {list.map((el,index)=>{ return <li
+      key={index}>{el.title}<br/>{el.text}</li>}) }
 
-      {this.state.categoryId}
     </div>
+      </div>
   );
 
 }
