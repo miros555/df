@@ -70,7 +70,9 @@ sendData () {
 
 
   const listPost = {
-    title: this.state.title
+    title: this.state.title,
+    text: this.state.text,
+    categoryId: this.state.categoryId
   };
   var qUrl = 'https://test-task-server.herokuapp.com/api/v1/recipe/create';
   var option = {
@@ -80,8 +82,8 @@ sendData () {
   payload: JSON.stringify(listPost),
   muteHttpExceptions: true,
 };
-  const proxyurl = "https://cors-anywhere.herokuapp.com/";
-  fetch(proxyurl+qUrl, option).then(data =>{
+  //const proxyurl = "https://cors-anywhere.herokuapp.com/";
+  fetch(qUrl, option).then(data =>{
           console.log("Successful" + data);
 
           this.setState({
