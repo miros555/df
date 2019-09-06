@@ -45,7 +45,7 @@ sendData () {
     "categoryId":this.state.categoryId
   };
     fetch(url, {
-      mode: 'no-cors',
+      mode: 'cors',
       body: JSON.stringify(data),
       /*headers: {
         'dataType': 'json',
@@ -143,7 +143,7 @@ sendData () {
       {list.map((el,index)=>{ return <li
       key={index}>{el.title}<br/>{el.text}</li>}) }
 
-  
+
       </div>
   );
 
