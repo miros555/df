@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import logo from '../logo.svg';
 //import {connect} from 'react-redux';
 //import {bindActionCreators} from 'redux';
 import '../App.css';
 import {Input, List, Grid, Image, Button, Icon } from 'semantic-ui-react';
-import {requestSuccess,request,requestError,fetchList} from '../actions';
+//import {requestSuccess,request,requestError,fetchList} from '../actions';
+import AddRecipe from './AddRecipe';
 
 class App extends Component {
 constructor(props){
@@ -17,11 +17,13 @@ this.state={
   categoryId:'',
   title:'',
   text:'',
-  visible:false
+  visible:false,
+  onOpen:false
  }
 
  this.onChangeInput=this.onChangeInput.bind(this);
  this.sendData=this.sendData.bind(this);
+ //this.addRecipe=this.addRecipe.bind(this);
 }
 
 componentDidMount(){
@@ -46,7 +48,7 @@ sendData () {
   };
   var qUrl = 'https://test-task-server.herokuapp.com/api/v1/recipe/create';
   var option = {
-    mode: 'no-cors',
+    //mode: 'no-cors',
     method: "POST",
     body: JSON.stringify(listPost),
     headers: {
@@ -68,7 +70,11 @@ sendData () {
 
   }
 
-
+/*
+addRecipe(){
+  this.setState({categoryId:_id})
+}
+*/
   onChangeInput(e) {
       const name = e.target.name;
       const value = e.target.value;
@@ -81,42 +87,50 @@ sendData () {
 
 
 
-  render(){
+render(){
 
     let list = this.state.data;
 
 
     let addInput;
-
-
     if (this.state.visible){
-      addInput = <Grid>
-      <div style={{color:'red'}} className='panel panel-default'>
-      <Input onChange={this.onChangeInput} name='categoryId' placeholder='Category' value={this.state.categoryId}/>
-      <Input onChange={this.onChangeInput} name='title' placeholder='Title' value={this.state.title}/>
-      <textarea onChange={this.onChangeInput} name='text' placeholder='Recipe' value={this.state.text} />
-        <Button positive onClick={this.sendData} >
-        <Icon name='plus' />Add</Button>
-          </div>
-          </Grid>
+      addInput =
+  <div>
+  <Input onChange={this.onChangeInput} name='categoryId' placeholder='Category' value={this.state.categoryId}/>
+  <Input onChange={this.onChangeInput} name='title' placeholder='Title' value={this.state.title}/>
+  <textarea onChange={this.onChangeInput} name='text' placeholder='Recipe' value={this.state.text} />
+  <Button positive onClick={this.sendData} >
+    <Icon name='plus' />Add</Button>
+       </div>
+
+
+
     }
 
   return (
     <div className="App">
       <header className="App-header">
-
-
-  {this.state.categoryId}
-      <h2>AdminPanel555</h2>
-      <Button style={{marginTop:-50,marginLeft:50}} positive onClick={this.toggle}>
-       <Icon name='plus' />Add To List</Button>
-       {addInput}
+    <h2>AdminPanel</h2>
       </header>
-      {list.map((el,index)=>{ return <li
-      key={index}>{el.title}<br/>{el.text}</li>}) }
+{this.state.categoryId}
+{this.state.onOpen ? <AddRecipe categoryId={this.state.categoryId} /> : ''}
+
+<Button style={{marginTop:-50,marginLeft:50}} positive onClick={this.toggle}>
+<Icon name='plus' />Add Category To List</Button>
+       {addInput}
 
 
-      </div>
+{list.map((el,index)=>{return <li key={index}>
+{el.title}<br/>
+{el._id} <Button onClick={()=>this.setState({categoryId:el._id,onOpen:true,
+      dataRecipe:[]})}>
+
+
+ Add Recipe To This Category</Button>
+ </li>}) }
+
+
+</div>
   );
 
 }
