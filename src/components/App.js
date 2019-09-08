@@ -5,8 +5,10 @@ import '../App.css';
 import {Input, List, Grid, Image, Button, Icon } from 'semantic-ui-react';
 //import {requestSuccess,request,requestError,fetchList} from '../actions';
 import AddRecipe from './AddRecipe';
+import Category from './Category';
 import AddCategory from './AddCategory';
 import EditCategory from './EditCategory';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 //import {fetchList} from '../actions';
 
 
@@ -123,10 +125,16 @@ render(){
 
 
   return (
+
+<Router>
+
     <div className="App">
+
       <header className="App-header">
     <h2>AdminPanel</h2>
       </header>
+
+
 {/*this.state.categoryId*/}
 <b>{this.state.title}</b>{' '}>>{' '}
 {this.state.visibleInputCategory ? <AddCategory addList={this.addList}/> : ''}
@@ -141,10 +149,10 @@ render(){
 
 
 {list.map((el,index)=>{return <li key={index}>
-<span style={{width:350}}>{/*el._id*/}</span><br/>
+<span style={{width:350}}>{el._id}</span><br/>
 
-<Button style={{width:230}}><a href={"https://test-task-server.herokuapp.com/api/v1/recipe/byCategory/"+el._id}>
-{el.title}</a></Button>
+<Button style={{width:230}}>{/*{el.title}*/}
+<a href={"/"+el._id}>{el.title}</a></Button>
 
 
 <Button positive onClick={()=>this.setState({categoryId:el._id,
@@ -162,13 +170,20 @@ render(){
 
  {this.state.onOpenEdit&&el._id===this.state.categoryId ?
      <EditCategory title={el.title} categoryId={this.state.categoryId} newList={this.newList} /> : ''}
+
+<Route path={"/"+el._id} render={()=><Category categoryId={el._id} />}   />
+
  </li>}) }
+
+{/*<Route path="/:el._id" component={Category} categoryId={el._id} />*/}
+
+<Route path="/order/:direction" component={AddRecipe} />
 
 
 </div>
-  );
+    </Router>);
 
-}
+   }
 }
 
 

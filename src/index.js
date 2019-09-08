@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'semantic-ui-css/semantic.min.css';
-//import {createStore, applyMiddleware, compose} from 'redux';
-//mport {Provider} from 'react-redux';
-//import thunk from 'redux-thunk';
-//import { createSelector } from 'reselect';
+import { BrowserRouter, Router, Route, Switch } from 'react-router-dom';
 import './index.css';
 import App from './components/App';
+import AddCategory from './components/AddCategory';
+import EditCategory from './components/EditCategory';
+
 import * as serviceWorker from './serviceWorker';
 //import reducer from './reducer';
 
@@ -15,7 +15,8 @@ import * as serviceWorker from './serviceWorker';
 
 // Container component
 ReactDOM.render(
-    <App />,
+
+           <App/>,
   document.getElementById('root')
 );
 
