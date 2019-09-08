@@ -110,8 +110,8 @@ render(){
   <Grid.Row>
   <Grid.Column width={5}>
   {this.state.recipeId}
-  <Input onChange={this.onChangeInput} name='title' placeholder='Title' value={this.state.title}/>
-  <TextArea onChange={this.onChangeInput} name='text' placeholder='Text of your Recipe' value={this.state.text} />
+  <Input onChange={this.onChangeInput} style={{width:350}} name='title' placeholder='Title' value={this.state.title}/>
+  <TextArea onChange={this.onChangeInput} style={{width:350}} name='text' placeholder='Text of your Recipe' value={this.state.text} />
   <Button onClick={this.sendRecipe} >Add</Button><br/>
 
 List Recipes of this Category:<br/>
