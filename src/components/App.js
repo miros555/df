@@ -141,18 +141,20 @@ render(){
 
 
 {list.map((el,index)=>{return <li key={index}>
-{el.title}<br/>
-{el._id} <Button positive onClick={()=>this.setState({categoryId:el._id,onOpenAdd:true})}>
- Add New Recipe</Button>
+<span style={{width:350}}>{el.title}</span><br/>
 
- <Button onClick={()=>this.setState({categoryId:el._id,onOpenEdit:true})}>
-  <Icon name='edit' />Edit</Button>
+<Button style={{width:230}}>{el._id}</Button><Button positive onClick={()=>this.setState({
+            categoryId:el._id,onOpenAdd:true,onOpenEdit:false})}>
+ <Icon name='plus' />New Recipe</Button>
 
- <Button onClick={()=>{this.setState({categoryDeleteId:el._id});
-  this.deleteCategory(el._id); this.removeElement(el._id); }}><Icon name='times' /> Delete</Button>
+ <Button onClick={()=>this.setState({categoryId:el._id,onOpenEdit:true,onOpenAdd:false})}>
+<Icon name='edit' /></Button>
+
+ <Button onClick={()=>{this.setState({categoryDeleteId:el._id});this.deleteCategory(el._id); this.removeElement(el._id); }}>
+ <Icon name='times' /></Button>
 
  {this.state.onOpenAdd&&el._id===this.state.categoryId ?
-   <AddRecipe categoryId={this.state.categoryId} fetchList={this.fetchList} /> : ''}
+     <AddRecipe categoryId={this.state.categoryId} fetchList={this.fetchList} /> : ''}
 
  {this.state.onOpenEdit&&el._id===this.state.categoryId ?
      <EditCategory title={el.title} categoryId={this.state.categoryId} newList={this.newList} /> : ''}

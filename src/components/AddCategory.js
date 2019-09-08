@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../App.css';
-import {Input, List, Grid, Image, Button, Icon } from 'semantic-ui-react';
+import {Input, List, Grid, Button, Icon } from 'semantic-ui-react';
 //import {requestSuccess,request,requestError,fetchList} from '../actions';
 //import AddRecipe from './AddRecipe';
 

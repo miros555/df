@@ -19,15 +19,23 @@ this.state={
 
 }
 
+fetchListRecipe = () => {
+fetch('https://test-task-server.herokuapp.com/api/v1/recipe/byCategory/'+this.props.categoryId)
+            .then((res) => { return res.json() })
+            .then((data) => {
+                console.log(data);
+                this.setState({ data: data });
+                });
+
+}
+
+addListRecipe = (value) => {
+  this.setState({data: [...this.state.data, value]});
+  this.fetchListRecipe ();
+}
 
 componentDidMount(){
-    //this.props.dispatch(fetchList());
-  fetch('https://test-task-server.herokuapp.com/api/v1/recipe/byCategory/'+this.props.categoryId)
-              .then((res) => { return res.json() })
-              .then((data) => {
-                  console.log(data);
-                  this.setState({ data: data });
-                  });
+  this.fetchListRecipe ();
   }
 
 
@@ -54,14 +62,17 @@ sendRecipe = () => {
             title:'',
             text:''
         });
-    })
-
+    }).then(
+           this.fetchListRecipe(),
+           this.addListRecipe(listPost)
+    //this.setState({onOpenEdit:false})
+  );
 
   }
 
-deleteRecipe = () => {
+deleteRecipe = (value) => {
   //var recipeId = this.state.recipeId;
-  var qUrl = 'https://test-task-server.herokuapp.com/api/v1/recipe/'+this.state.recipeId;
+  var qUrl = 'https://test-task-server.herokuapp.com/api/v1/recipe/'+value;
   var option = {
     method: "DELETE",
     headers: {
@@ -71,7 +82,10 @@ deleteRecipe = () => {
 };
   fetch(qUrl, option).then(data =>{
           console.log("Successful" + data);
-    })
+    });
+
+    this.setState({data: this.state.data.filter(el => el._id !==value)});
+    //this.fetchListRecipe()
 
 }
 
@@ -102,8 +116,8 @@ render(){
 
 List Recipes of this Category:<br/>
   { this.state.data.map((el,i)=>{return <li key={i}>{el.title}
-  <Button onClick={()=>{this.setState({recipeId:el._id}).then(this.deleteRecipe)
-                        }} >Delete</Button>{' '}
+  <Button style={{marginLeft:150}} onClick={()=>{this.setState({recipeId:el._id});
+          this.deleteRecipe(el._id) }} >Delete</Button>{' '}
 
 {/*{this.state.openConfirm?<Button onClick={this.deleteRecipe}>Yes</Button>:''}*/}
   </li> }) }
