@@ -5,6 +5,10 @@ import '../App.css';
 import {Input, List, Grid, Image, Button, Icon } from 'semantic-ui-react';
 //import {requestSuccess,request,requestError,fetchList} from '../actions';
 import AddRecipe from './AddRecipe';
+import AddCategory from './AddCategory';
+import EditCategory from './EditCategory';
+//import {fetchList} from '../actions';
+
 
 class App extends Component {
 constructor(props){
@@ -17,29 +21,47 @@ this.state={
   categoryId:'',
   title:'',
   text:'',
-  visible:false,
-  onOpen:false
+  categoryDeleteId:'',
+  visibleInputCategory:false,
+  onOpenAdd:false,
+  onOpenEdit:false
  }
 
- this.onChangeInput=this.onChangeInput.bind(this);
- this.sendData=this.sendData.bind(this);
- //this.addRecipe=this.addRecipe.bind(this);
 }
 
+
+fetchList = () => {
+    fetch('https://test-task-server.herokuapp.com/api/v1/category/all')
+          .then((res) => { return res.json() })
+          .then((data) => {
+              console.log(data);
+              this.setState({ data });
+              });
+        }
 componentDidMount(){
   //this.props.dispatch(fetchList());
-  fetch('https://test-task-server.herokuapp.com/api/v1/category/all')
-            .then((res) => { return res.json() })
-            .then((data) => {
-                console.log(data);
-                this.setState({ data });
-                });
+  this.fetchList();
 }
 
+addList = (value) => {
+  this.setState({data:[...this.state.data, value]});
+  this.fetchList();
+}
 
+newList = () => {
+  this.fetchList();
+  this.forceUpdate();
+  this.setState({onOpenEdit:false})
 
+}
 
-sendData () {
+removeElement = (value) => {
+    this.setState({
+        data: this.state.data.filter(el => el._id !== value)
+    })
+}
+
+sendData = () => {
 
   const listPost = {
     title: this.state.title,
@@ -48,7 +70,6 @@ sendData () {
   };
   var qUrl = 'https://test-task-server.herokuapp.com/api/v1/recipe/create';
   var option = {
-    //mode: 'no-cors',
     method: "POST",
     body: JSON.stringify(listPost),
     headers: {
@@ -59,7 +80,6 @@ sendData () {
   //const proxyurl = "https://cors-anywhere.herokuapp.com/";
   fetch(qUrl, option).then(data =>{
           console.log("Successful" + data);
-
           this.setState({
             categoryId:'',
             title:'',
@@ -70,19 +90,29 @@ sendData () {
 
   }
 
-/*
-addRecipe(){
-  this.setState({categoryId:_id})
+
+deleteCategory = (value) => {
+  var qUrl = 'https://test-task-server.herokuapp.com/api/v1/category/'+value;
+  var option = {
+    method: "DELETE",
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+  };
+  fetch(qUrl, option).then(data =>{
+          console.log("Successful" + data);
+    })
 }
-*/
-  onChangeInput(e) {
+
+  onChangeInput = (e) => {
       const name = e.target.name;
       const value = e.target.value;
       this.setState({[name]: value});
     }
 
-  toggle=()=>{
-    this.setState({visible:!this.state.visible})
+  toggle = () => {
+    this.setState({visibleInputCategory:!this.state.visibleInputCategory})
   }
 
 
@@ -92,41 +122,40 @@ render(){
     let list = this.state.data;
 
 
-    let addInput;
-    if (this.state.visible){
-      addInput =
-  <div>
-  <Input onChange={this.onChangeInput} name='categoryId' placeholder='Category' value={this.state.categoryId}/>
-  <Input onChange={this.onChangeInput} name='title' placeholder='Title' value={this.state.title}/>
-  <textarea onChange={this.onChangeInput} name='text' placeholder='Recipe' value={this.state.text} />
-  <Button positive onClick={this.sendData} >
-    <Icon name='plus' />Add</Button>
-       </div>
-
-
-
-    }
-
   return (
     <div className="App">
       <header className="App-header">
     <h2>AdminPanel</h2>
       </header>
 {this.state.categoryId}
-{this.state.onOpen ? <AddRecipe categoryId={this.state.categoryId} /> : ''}
+{this.state.title}
+{this.state.visibleInputCategory ? <AddCategory addList={this.addList}/> : ''}
 
-<Button style={{marginTop:-50,marginLeft:50}} positive onClick={this.toggle}>
-<Icon name='plus' />Add Category To List</Button>
-       {addInput}
+{/*{this.state.onOpen ? <AddRecipe categoryId={this.state.categoryId} /> : ''}
+*/}
+
+{!this.state.visibleInputCategory?<Button style={{marginLeft:350}} positive onClick={this.toggle}>
+<Icon name='plus' />Add New Category</Button>:
+<Button style={{marginLeft:350}} onClick={this.toggle}>
+<Icon name='times' /></Button>}
 
 
 {list.map((el,index)=>{return <li key={index}>
 {el.title}<br/>
-{el._id} <Button onClick={()=>this.setState({categoryId:el._id,onOpen:true,
-      dataRecipe:[]})}>
+{el._id} <Button positive onClick={()=>this.setState({categoryId:el._id,onOpenAdd:true})}>
+ Add New Recipe</Button>
 
+ <Button onClick={()=>this.setState({categoryId:el._id,onOpenEdit:true})}>
+  <Icon name='edit' />Edit</Button>
 
- Add Recipe To This Category</Button>
+ <Button onClick={()=>{this.setState({categoryDeleteId:el._id});
+  this.deleteCategory(el._id); this.removeElement(el._id); }}><Icon name='times' /> Delete</Button>
+
+ {this.state.onOpenAdd&&el._id===this.state.categoryId ?
+   <AddRecipe categoryId={this.state.categoryId} fetchList={this.fetchList} /> : ''}
+
+ {this.state.onOpenEdit&&el._id===this.state.categoryId ?
+     <EditCategory title={el.title} categoryId={this.state.categoryId} newList={this.newList} /> : ''}
  </li>}) }
 
 

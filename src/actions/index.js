@@ -15,23 +15,10 @@ export const requestError = () => {
 
 
 export const fetchList = () => {
-  return (dispatch) => {
-    dispatch(request());
-    fetch('https://test-task-server.herokuapp.com/api/v1/recipe/all' ,
-    {
-        mode: 'no-cors',
-        method: "GET",
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-      },}
-
-
-  )
-      .then(res => res.json())
-      .then(
-        data => dispatch(requestSuccess(data)),
-        err => dispatch(requestError())
-      );
-  }
+  fetch('https://test-task-server.herokuapp.com/api/v1/category/all')
+            .then((res) => { return res.json() })
+            .then((data) => {
+                console.log(data);
+                this.setState({ data });
+                });
 };
