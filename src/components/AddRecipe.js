@@ -115,7 +115,8 @@ render(){
   <Button onClick={this.sendRecipe} >Add</Button><br/>
 
 List Recipes of this Category:<br/>
-  { this.state.data.map((el,i)=>{return <li key={i}>{el.title}
+  { this.state.data.map((el,i)=>{return <li key={i}>
+  <a href={"https://test-task-server.herokuapp.com/api/v1/recipe/item/"+el._id}>{el.title}</a>
   <Button style={{marginLeft:150}} onClick={()=>{this.setState({recipeId:el._id});
           this.deleteRecipe(el._id) }} >Delete</Button>{' '}
 

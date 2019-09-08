@@ -127,8 +127,8 @@ render(){
       <header className="App-header">
     <h2>AdminPanel</h2>
       </header>
-{this.state.categoryId}
-{this.state.title}
+{/*this.state.categoryId*/}
+<b>{this.state.title}</b>{' '}>>{' '}
 {this.state.visibleInputCategory ? <AddCategory addList={this.addList}/> : ''}
 
 {/*{this.state.onOpen ? <AddRecipe categoryId={this.state.categoryId} /> : ''}
@@ -141,10 +141,14 @@ render(){
 
 
 {list.map((el,index)=>{return <li key={index}>
-<span style={{width:350}}>{el.title}</span><br/>
+<span style={{width:350}}>{/*el._id*/}</span><br/>
 
-<Button style={{width:230}}>{el._id}</Button><Button positive onClick={()=>this.setState({
-            categoryId:el._id,onOpenAdd:true,onOpenEdit:false})}>
+<Button style={{width:230}}><a href={"https://test-task-server.herokuapp.com/api/v1/recipe/byCategory/"+el._id}>
+{el.title}</a></Button>
+
+
+<Button positive onClick={()=>this.setState({categoryId:el._id,
+                   title:el.title, onOpenAdd:true,onOpenEdit:false})}>
  <Icon name='plus' />New Recipe</Button>
 
  <Button onClick={()=>this.setState({categoryId:el._id,onOpenEdit:true,onOpenAdd:false})}>
