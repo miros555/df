@@ -6,7 +6,6 @@ import {Input, List, Grid, Image, Button, Icon } from 'semantic-ui-react';
 //import {requestSuccess,request,requestError,fetchList} from '../actions';
 import AddRecipe from './AddRecipe';
 import Recipe from './Recipe';
-import BlockTree from './BlockTree';
 import Category from './Category';
 import AddCategory from './AddCategory';
 import EditCategory from './EditCategory';
@@ -14,7 +13,7 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 //import {fetchList} from '../actions';
 
 
-class App extends Component {
+class BlockTree extends Component {
 constructor(props){
 super(props);
 this.state={
@@ -129,69 +128,56 @@ render(){
 
     let list = this.state.data;
     let listSelected = list.filter(el => el.parentId==null);
-    let listChildCat = list.filter(el => el.parentId !==null);
+    let listChildCat = list.filter(el => el.parentId===this.props.parentId);
+
+    //listSelected.push(listChildCat);
+
+  {/*  listSelected = [...listSelected, listChildCat];  */}
+
 
 
   return (
 
 <Router>
 
-    <div className="App">
+<div>
 
-      <header className="App-header">
-    <h2>AdminPanel</h2>
-      </header>
-
-
-{/*this.state.categoryId*/}
-<b>{this.state.title}</b>{' '}>>{' '}
+ {listChildCat.map((el,index)=>{return <li key={index}>
+ <span style={{marginLeft:20,width:350}}>{el._id}</span><br/>
+ <a href={"/category/"+el._id}>
+ <button onClick={()=>this.setState({title:el.title})} style={{width:130}}>{/*{el.title}*/}
+ <span style={{color:'#2874A6'}}>{el.title}</span></button></a>
 
 
-{this.state.visibleInputCategory ? <AddCategory parentId={null} onOpenAddchild={this.onOpenAddchild}
-        addList={this.addList}/> : ''}
+{/************************************************************/}
+
+ <Button size='mini' positive onClick={()=>this.setState({categoryId:el._id, parentId:el._id,
+                    title:el.title, onOpenEdit:false, onOpenAddchildCat:!this.state.onOpenAddchildCat,
+                    onOpenEdit:false})}>
+  <Icon name='plus' />Add Child Category</Button>
 
 
-{!this.state.visibleInputCategory?<Button style={{marginLeft:350}} positive onClick={this.toggle}>
-<Icon name='plus' />Add New Category</Button>:
-<Button style={{marginLeft:350}} onClick={this.toggle}>
-<Icon name='times' /></Button>}
+ <Button size='mini' positive onClick={()=>this.setState({categoryId:el._id,
+                    title:el.title, onOpenAdd:!this.state.onOpenAdd,
+                    onOpenAddchildCat:false, onOpenEdit:false})}>
+  <Icon name='plus' />New Recipe</Button>
 
+  <Button size='mini' onClick={()=>this.setState({categoryId:el._id,
+                     onOpenEdit:!this.state.onOpenEdit, onOpenAddchildCat:false, onOpenAdd:false})}>
+ <Icon name='edit' /></Button>
 
+  <Button size='mini' onClick={()=>{this.setState({categoryDeleteId:el._id});this.deleteCategory(el._id); this.removeElement(el._id); }}>
+  <Icon name='times' /></Button>
 
-{listSelected.map((el,index)=>{return <li key={index}>
-<span style={{width:350}}>{el._id}</span><br/>
+  {this.state.onOpenAddchildCat&&el._id===this.state.categoryId ?
+      <AddCategory parentId={el._id} onOpenAddchild={this.onOpenAddchild} addList={this.addList}/> : ''}
 
-<a href={"/category/"+el._id}>
-<Button onClick={()=>this.setState({title:el.title})} style={{width:230}}>{/*{el.title}*/}
-<span style={{color:'#2874A6'}}>{el.title}</span></Button></a>
+  {this.state.onOpenAdd&&el._id===this.state.categoryId ?
+      <AddRecipe categoryId={this.state.categoryId} fetchList={this.fetchList} /> : ''}
 
-<Button positive onClick={()=>this.setState({categoryId:el._id, parentId:el._id,
-                   title:el.title, onOpenAddchildCat:!this.state.onOpenAddchildCat,
-                   onOpenEdit:false})}>
- <Icon name='plus' />Add Child Category</Button>
+  {this.state.onOpenEdit&&el._id===this.state.categoryId ?
+      <EditCategory title={el.title} categoryId={this.state.categoryId} newList={this.newList} /> : ''}
 
-
-<Button positive onClick={()=>this.setState({categoryId:el._id,
-                   title:el.title, onOpenAdd:!this.state.onOpenAdd,onOpenEdit:false})}>
- <Icon name='plus' />New Recipe</Button>
-
- <Button onClick={()=>this.setState({categoryId:el._id,onOpenEdit:true,onOpenAdd:false})}>
-<Icon name='edit' /></Button>
-
- <Button onClick={()=>{this.setState({categoryDeleteId:el._id});this.deleteCategory(el._id); this.removeElement(el._id); }}>
- <Icon name='times' /></Button>
-
-
-
-
- {this.state.onOpenAddchildCat&&el._id===this.state.categoryId ?
-     <AddCategory parentId={el._id} onOpenAddchild={this.onOpenAddchild} addList={this.addList}/> : ''}
-
- {this.state.onOpenAdd&&el._id===this.state.categoryId ?
-     <AddRecipe categoryId={this.state.categoryId} fetchList={this.fetchList} /> : ''}
-
- {this.state.onOpenEdit&&el._id===this.state.categoryId ?
-     <EditCategory title={el.title} categoryId={this.state.categoryId} newList={this.newList} /> : ''}
 
 
 
@@ -201,19 +187,17 @@ render(){
 
 
 
+ <Route path={"/category/"+el._id} render={()=><Category categoryId={el._id} />}   />
 
-<Route path={"/category/"+el._id} render={()=><Category categoryId={el._id} />}   />
+
+{/****************************************************************/}
+
 
  </li>}) }
 
-{/*<Route path="/:el._id" component={Category} categoryId={el._id} />
-<Route path='/recipe/' component={Recipe}/>
-
-<Route path="/recipe/" render={()=><Recipe /> }   />
-*/}
-
-
 </div>
+
+
 
     </Router>);
 
@@ -221,4 +205,4 @@ render(){
 }
 
 
-export default App;
+export default BlockTree;

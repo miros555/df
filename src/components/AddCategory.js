@@ -68,6 +68,7 @@ sendData = () => {
 
   const newPost = {
     title: this.state.title,
+    parentId: this.props.parentId
   };
   var qUrl = 'https://test-task-server.herokuapp.com/api/v1/category/create';
   var option = {
@@ -87,6 +88,7 @@ sendData = () => {
   formErrors: {title: ''},
   formValid: false
 }));
+      this.props.onOpenAddchild (false);
   }
 
 
@@ -109,17 +111,16 @@ render(){
   return (
 
 
-    <Grid>
-    <Grid.Row width={3}>
-<div style={{color:'red',marginLeft:20}} className='panel panel-default'>
+  <div >
+<div style={{color:'red'}} className='panel panel-default'>
       <FormErrors formErrors={this.state.formErrors} />
         </div><br/>
 
     <Input onChange={this.onChangeInput} name='title' placeholder='Title' value={this.state.title}/>
     <Button positive onClick={this.sendData} disabled={this.state.formValid}>
       <Icon name='plus' />Add</Button>
-      </Grid.Row>
-      </Grid>
+
+    </div>
 
 
   );
