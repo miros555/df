@@ -4,7 +4,7 @@ import 'semantic-ui-css/semantic.min.css';
 import { BrowserRouter, Router, Route, Switch } from 'react-router-dom';
 import './index.css';
 import App from './components/App';
-import AddCategory from './components/AddCategory';
+import AddCategory from './components/AddRecipe';
 import EditCategory from './components/EditCategory';
 
 import * as serviceWorker from './serviceWorker';
@@ -15,8 +15,8 @@ import * as serviceWorker from './serviceWorker';
 
 // Container component
 ReactDOM.render(
-
-           <App/>,
+<BrowserRouter>
+           <App/></BrowserRouter>,
   document.getElementById('root')
 );
 

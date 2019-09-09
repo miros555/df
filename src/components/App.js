@@ -5,6 +5,7 @@ import '../App.css';
 import {Input, List, Grid, Image, Button, Icon } from 'semantic-ui-react';
 //import {requestSuccess,request,requestError,fetchList} from '../actions';
 import AddRecipe from './AddRecipe';
+import Recipe from './Recipe';
 import Category from './Category';
 import AddCategory from './AddCategory';
 import EditCategory from './EditCategory';
@@ -123,7 +124,6 @@ render(){
 
     let list = this.state.data;
 
-
   return (
 
 <Router>
@@ -151,12 +151,13 @@ render(){
 {list.map((el,index)=>{return <li key={index}>
 <span style={{width:350}}>{el._id}</span><br/>
 
-<Button style={{width:230}}>{/*{el.title}*/}
-<a href={"/"+el._id}>{el.title}</a></Button>
+<a href={"/category/"+el._id}>
+<Button onClick={()=>this.setState({title:el.title})} style={{width:230}}>{/*{el.title}*/}
+<span style={{color:'#2874A6'}}>{el.title}</span></Button></a>
 
 
 <Button positive onClick={()=>this.setState({categoryId:el._id,
-                   title:el.title, onOpenAdd:true,onOpenEdit:false})}>
+                   title:el.title, onOpenAdd:!this.state.onOpenAdd,onOpenEdit:false})}>
  <Icon name='plus' />New Recipe</Button>
 
  <Button onClick={()=>this.setState({categoryId:el._id,onOpenEdit:true,onOpenAdd:false})}>
@@ -171,16 +172,19 @@ render(){
  {this.state.onOpenEdit&&el._id===this.state.categoryId ?
      <EditCategory title={el.title} categoryId={this.state.categoryId} newList={this.newList} /> : ''}
 
-<Route path={"/"+el._id} render={()=><Category categoryId={el._id} />}   />
+<Route path={"/category/"+el._id} render={()=><Category categoryId={el._id} />}   />
 
  </li>}) }
 
-{/*<Route path="/:el._id" component={Category} categoryId={el._id} />*/}
+{/*<Route path="/:el._id" component={Category} categoryId={el._id} />
+<Route path='/recipe/' component={Recipe}/>
 
-<Route path="/order/:direction" component={AddRecipe} />
+<Route path="/recipe/" render={()=><Recipe /> }   />
+*/}
 
 
 </div>
+
     </Router>);
 
    }

@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import {Input, List, Grid, Image, Button, Icon } from 'semantic-ui-react';
+import Recipe from './Recipe';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+
 
 class Category extends Component {
   constructor(props){
@@ -7,6 +10,7 @@ class Category extends Component {
   this.state={
     posts: [],
     data: [],
+    visible:'',
     categoryId:'',
     title:'',
     text:''
@@ -27,17 +31,30 @@ class Category extends Component {
     this.fetchList_1();
   }
 
+
   render(){
 let listOfOneCategory = this.state.data;
 
     return(
+
 <div>
       {listOfOneCategory.map((el,index)=>{return <li key={index}>
-      <span style={{width:350}}>{el.title}<br/>{el._id}</span><br/>
+<a style={{cursor:'pointer'}}><div onClick={()=>{
+      this.setState({visible:!this.state.visible})} }>
 
+      {el.title} </div> </a><br/>
+      <span style={{width:350}}>{el._id}</span>
+      {this.state.visible ? <Recipe recipeId={el._id} /> : ''}
+{/*
+     <Route path={"/recipe/"+el._id} render={()=><Recipe recipeId={el._id} />} />
+     <Recipe recipeId={el._id} />
+     href={"/recipe/"+el._id}
+*/}
           </li>}) }
-</div>
-    );
+
+
+   </div>
+     );
   }
 }
 

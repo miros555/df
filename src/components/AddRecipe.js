@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import '../App.css';
 import {Input, TextArea, List, Grid, Image, Button, Icon } from 'semantic-ui-react';
+import Recipe from './Recipe';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+
 
 class AddRecipe extends Component {
 constructor(props){
@@ -105,7 +108,7 @@ render(){
 
 
   return (
-
+ <Router>
   <Grid style={{marginTop:-50,marginLeft:550}}>
   <Grid.Row>
   <Grid.Column width={5}>
@@ -116,9 +119,11 @@ render(){
 
 List Recipes of this Category:<br/>
   { this.state.data.map((el,i)=>{return <li key={i}>
-  <a href={"https://test-task-server.herokuapp.com/api/v1/recipe/item/"+el._id}>{el.title}</a>
+  <a href={"/recipe"+el._id}>{el.title}</a>
   <Button style={{marginLeft:150}} onClick={()=>{this.setState({recipeId:el._id});
           this.deleteRecipe(el._id) }} >Delete</Button>{' '}
+
+<Route path={"/recipe"+el._id} render={()=><Recipe recipeId={el._id} />} />
 
 {/*{this.state.openConfirm?<Button onClick={this.deleteRecipe}>Yes</Button>:''}*/}
   </li> }) }
@@ -128,7 +133,7 @@ List Recipes of this Category:<br/>
   </Grid>
 
 
-  );
+  </Router>);
 
 }
 }
