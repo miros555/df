@@ -44,8 +44,9 @@ let listOfOneCategory = this.state.data;
 
       {el.title} </div> </a><br/>
       <span style={{width:350}}>{el._id}</span>
-      {this.state.visible ? <Recipe recipeId={el._id} /> : ''}
+      <Recipe recipeId={el._id} /> 
 {/*
+     {this.state.visible ? <Recipe recipeId={el._id} /> : ''}
      <Route path={"/recipe/"+el._id} render={()=><Recipe recipeId={el._id} />} />
      <Recipe recipeId={el._id} />
      href={"/recipe/"+el._id}
