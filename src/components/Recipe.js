@@ -34,7 +34,7 @@ let recipe = this.state.data;
 console.log(recipe);
     return(
 <div>
-     <span style={{}}>{this.props.categoryName}>></span>
+     <span style={{}}>{this.props.categoryName} >> {recipe.title}</span>
       <h2 >{recipe.title}</h2><br/>
       <span style={{width:350}}>{recipe.text}</span>
 
