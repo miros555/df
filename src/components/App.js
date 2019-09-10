@@ -161,7 +161,7 @@ render(){
 
 
 {listSelected.map((el,index)=>{return <li key={index}>
-<span style={{width:350}}>{el._id}</span><br/>
+{/**/} <span style={{width:350}}>{el._title}</span><br/>
 
 <a href={"/category/"+el._id}>
 <Button onClick={()=>this.setState({title:el.title})} style={{width:230}}>{/*{el.title}*/}
@@ -199,7 +199,7 @@ render(){
  <Icon name='times' /></Button>
 
 
- <Route path={"/category/"+el._id} render={()=><Category categoryId={el._id} />}   />
+ <Route path={"/category/"+el._id} render={()=><Category categoryName={el.title} categoryId={el._id} />}   />
 
 
 

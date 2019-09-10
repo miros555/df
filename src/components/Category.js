@@ -43,8 +43,9 @@ let listOfOneCategory = this.state.data;
       this.setState({visible:!this.state.visible})} }>
 
       {el.title} </div> </a><br/>
-      <span style={{width:350}}>{el._id}</span>
-      <Recipe recipeId={el._id} /> 
+     <span style={{width:350}}>{}</span> 
+      <Recipe categoryName={this.props.categoryName} recipeId={el._id} />
+
 {/*
      {this.state.visible ? <Recipe recipeId={el._id} /> : ''}
      <Route path={"/recipe/"+el._id} render={()=><Recipe recipeId={el._id} />} />
