@@ -174,12 +174,14 @@ render(){
                     onOpenAddchildCat:false, onOpenEdit:false})}>
   <Icon name='plus' />New Recipe</Button>
 
+         {!this.state.onOpenAdd ?
+           <span>
   <Button size='mini' onClick={()=>this.setState({categoryId:el._id,
                      onOpenEdit:!this.state.onOpenEdit, onOpenAddchildCat:false, onOpenAdd:false})}>
  <Icon name='edit' /></Button>
 
   <Button size='mini' onClick={()=>{this.setState({categoryDeleteId:el._id});this.deleteCategory(el._id); this.removeElement(el._id); }}>
-  <Icon name='times' /></Button>   </span>: ''}
+  <Icon name='times' /></Button>   </span>: ''} </span>: ''}
 
 
 
