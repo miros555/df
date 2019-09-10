@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import '../App.css';
 import {Input, TextArea, List, Grid, Image, Button, Icon } from 'semantic-ui-react';
-import Recipe from './Recipe';
+//import Article from './Article';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 
-class AddRecipe extends Component {
+class AddArticle extends Component {
 constructor(props){
 super(props);
 this.state={
@@ -13,7 +13,7 @@ this.state={
   error: null,
   isLoaded: false,
   categoryId:this.props.categoryId,
-  recipeId:'',
+  articleId:'',
   title:'',
   text:'',
   openConfirm:false,
@@ -22,8 +22,8 @@ this.state={
 
 }
 
-fetchListRecipe = () => {
-fetch('https://test-task-server.herokuapp.com/api/v1/recipe/byCategory/'+this.props.categoryId)
+fetchListItem = () => {
+fetch('https://test-task-server.herokuapp.com/api/v1/article/byCategory/'+this.props.categoryId)
             .then((res) => { return res.json() })
             .then((data) => {
                 console.log(data);
@@ -32,24 +32,24 @@ fetch('https://test-task-server.herokuapp.com/api/v1/recipe/byCategory/'+this.pr
 
 }
 
-addListRecipe = (value) => {
+addListItem = (value) => {
   this.setState({data: [...this.state.data, value]});
-  this.fetchListRecipe ();
+  this.fetchListItem ();
 }
 
 componentDidMount(){
-  this.fetchListRecipe ();
+  this.fetchListItem ();
   }
 
 
-sendRecipe = () => {
+sendItem = () => {
 
   const listPost = {
     title: this.state.title,
     text: this.state.text,
     categoryId: this.props.categoryId
   };
-  var qUrl = 'https://test-task-server.herokuapp.com/api/v1/recipe/create';
+  var qUrl = 'https://test-task-server.herokuapp.com/api/v1/article/create';
   var option = {
     method: "POST",
     body: JSON.stringify(listPost),
@@ -66,16 +66,16 @@ sendRecipe = () => {
             text:''
         });
     }).then(
-           this.fetchListRecipe(),
-           this.addListRecipe(listPost)
+           this.fetchListItem(),
+           this.addListItem(listPost)
     //this.setState({onOpenEdit:false})
   );
 
   }
 
-deleteRecipe = (value) => {
-  //var recipeId = this.state.recipeId;
-  var qUrl = 'https://test-task-server.herokuapp.com/api/v1/recipe/'+value;
+deleteItem = (value) => {
+  //var ItemId = this.state.ItemId;
+  var qUrl = 'https://test-task-server.herokuapp.com/api/v1/Item/'+value;
   var option = {
     method: "DELETE",
     headers: {
@@ -88,7 +88,7 @@ deleteRecipe = (value) => {
     });
 
     this.setState({data: this.state.data.filter(el => el._id !==value)});
-    //this.fetchListRecipe()
+    //this.fetchListItem()
 
 }
 
@@ -109,23 +109,25 @@ render(){
 
   return (
  <Router>
-  <Grid style={{marginTop:-50,marginLeft:595}}>
+  <Grid style={{marginTop:-50,marginLeft:455}}>
   <Grid.Row>
   <Grid.Column width={5}>
-  {this.state.recipeId}
+  {this.state.articleId}
   <Input onChange={this.onChangeInput} style={{width:350}} name='title' placeholder='Title' value={this.state.title}/>
-  <TextArea onChange={this.onChangeInput} style={{width:350}} name='text' placeholder='Text of your Recipe' value={this.state.text} />
-  <Button onClick={this.sendRecipe} >Add</Button><br/>
+  <TextArea onChange={this.onChangeInput} style={{width:350}} name='text' placeholder='Text of your article' value={this.state.text} />
+  <Button onClick={this.sendItem} >Add</Button><br/>
 
-List Recipes of this Category:<br/>
+List Articles of this Category:<br/>
   { this.state.data.map((el,i)=>{return <li key={i}>
-  <a href={"/recipe"+el._id}>{el.title}</a>
-  <Button style={{marginLeft:150}} onClick={()=>{this.setState({recipeId:el._id});
-          this.deleteRecipe(el._id) }} >Delete</Button>{' '}
+  <a href={"/article"+el._id}>{el.title}</a>
+  <Button style={{marginLeft:150}} onClick={()=>{this.setState({articleId:el._id});
+          this.deleteArticle(el._id) }} >Delete</Button>{' '}
 
-<Route path={"/recipe"+el._id} render={()=><Recipe recipeId={el._id} />} />
 
-{/*{this.state.openConfirm?<Button onClick={this.deleteRecipe}>Yes</Button>:''}*/}
+{/*
+<Route path={"/article"+el._id} render={()=><Article articleId={el._id} />} />
+
+{this.state.openConfirm?<Button onClick={this.deletearticle}>Yes</Button>:''}*/}
   </li> }) }
 
   </Grid.Column>
@@ -139,4 +141,4 @@ List Recipes of this Category:<br/>
 }
 
 
-export default AddRecipe;
+export default AddArticle;

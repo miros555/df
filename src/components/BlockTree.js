@@ -5,6 +5,7 @@ import '../App.css';
 import {Input, List, Grid, Image, Button, Icon } from 'semantic-ui-react';
 //import {requestSuccess,request,requestError,fetchList} from '../actions';
 import AddRecipe from './AddRecipe';
+import AddArticle from './AddArticle';
 import Recipe from './Recipe';
 import Category from './Category';
 import AddCategory from './AddCategory';
@@ -26,6 +27,7 @@ this.state={
   title:'',
   text:'',
   categoryDeleteId:'',
+  onOpenAddArticle:false,
   visibleInputCategory:false,
   onOpenAdd:false,
   onOpenAddchildCat:false,
@@ -157,7 +159,17 @@ render(){
   <Icon name='plus' />Add Child Category</Button>
 
 
- <Button size='mini' positive onClick={()=>this.setState({categoryId:el._id,
+  {!this.state.onOpenAddArticle ?
+   <Button size='mini' color='blue' onClick={()=>this.setState({categoryId:el._id,
+                      title:el.title, onOpenAddArticle:!this.state.onOpenAddArticle,onOpenEdit:false})}>
+    <Icon name='plus' />New Article</Button> :
+    <Button size='mini' onClick={()=>this.setState({onOpenAddArticle:!this.state.onOpenAddArticle})}>
+    <Icon name='times' /></Button> }
+
+
+  {!this.state.onOpenAddArticle ?
+    <span>
+ <Button size='mini' color='teal' onClick={()=>this.setState({categoryId:el._id,
                     title:el.title, onOpenAdd:!this.state.onOpenAdd,
                     onOpenAddchildCat:false, onOpenEdit:false})}>
   <Icon name='plus' />New Recipe</Button>
@@ -167,7 +179,13 @@ render(){
  <Icon name='edit' /></Button>
 
   <Button size='mini' onClick={()=>{this.setState({categoryDeleteId:el._id});this.deleteCategory(el._id); this.removeElement(el._id); }}>
-  <Icon name='times' /></Button>
+  <Icon name='times' /></Button>   </span>: ''}
+
+
+
+   <Route path={"/category/"+el._id} render={()=><Category categoryId={el._id} />}   />
+
+
 
   {this.state.onOpenAddchildCat&&el._id===this.state.categoryId ?
       <AddCategory parentId={el._id} onOpenAddchild={this.onOpenAddchild} addList={this.addList}/> : ''}
@@ -175,19 +193,17 @@ render(){
   {this.state.onOpenAdd&&el._id===this.state.categoryId ?
       <AddRecipe categoryId={this.state.categoryId} fetchList={this.fetchList} /> : ''}
 
+  {this.state.onOpenAddArticle&&el._id===this.state.categoryId ?
+               <AddArticle categoryId={this.state.categoryId} fetchList={this.fetchList} /> : ''}
+
+
   {this.state.onOpenEdit&&el._id===this.state.categoryId ?
       <EditCategory title={el.title} categoryId={this.state.categoryId} newList={this.newList} /> : ''}
 
 
 
 
-
 <BlockTree parentId={el._id} />
-
-
-
-
- <Route path={"/category/"+el._id} render={()=><Category categoryId={el._id} />}   />
 
 
 {/****************************************************************/}
